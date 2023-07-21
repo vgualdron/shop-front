@@ -34,4 +34,4 @@ jobs:
           protocol: ftps
           timeout: 120000
           local-dir: ./dist/pwa/
-          server-dir: public_html/app/
+          server-dir: ./
