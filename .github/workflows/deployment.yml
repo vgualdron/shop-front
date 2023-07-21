@@ -23,7 +23,7 @@ jobs:
         run: |
           npm install
           npm run build:pwa
-      - name: Sync files 📂 Server flamecol.com
+      - name: Sync files 📂 Server micomercio.com.co
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.FTP_SERVER_NAME }}
@@ -34,4 +34,4 @@ jobs:
           protocol: ftps
           timeout: 120000
           local-dir: ./dist/pwa/
-          server-dir: public_html/app
+          server-dir: public_html/app/
