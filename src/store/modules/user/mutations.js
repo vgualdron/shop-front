@@ -10,4 +10,7 @@ export default {
   [types.mutations.SET_STATUS_CHANGE_PASSWORD_USER](state, payload) {
     state.statusChangePasswordUser = payload;
   },
+  [types.mutations.SET_STATUS_CHANGE_IMAGE_PROFILE](state, payload) {
+    state.statusChangeImageProfile = payload;
+  },
 };

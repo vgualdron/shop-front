@@ -41,4 +41,13 @@ export default {
       console.error(error);
     }
   },
+  async [types.actions.CHANGE_IMAGE_PROFILE]({ commit }, payload) {
+    try {
+      const response = await userApi.changeImageProfile(payload);
+      commit(types.mutations.SET_STATUS_CHANGE_IMAGE_PROFILE, response.data);
+    } catch (error) {
+      console.error(error);
+      commit(types.mutations.SET_STATUS_CHANGE_IMAGE_PROFILE, error.response.data);
+    }
+  },
 };

@@ -12,15 +12,24 @@
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
                 <q-avatar size="72px">
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                  <img :src="srcProfile">
                 </q-avatar>
                 <div class="text-subtitle1 q-mt-md q-mb-xs">{{ name }}</div>
                 <div class="text-subtitle1 q-mb-xs">{{ roleSesion }}</div>
                 <q-btn
                   color="primary"
+                  label="Cambiar imagen de perfil"
+                  push
+                  size="sm"
+                  v-close-popup
+                  @click="clickChangeImageProfile"
+                />
+                <q-btn
+                  color="primary"
                   label="Cambiar contraseña"
                   push
                   size="sm"
+                  class="q-mt-sm"
                   v-close-popup
                   @click="clickChangePassword"
                 />
@@ -51,7 +60,12 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <form-change-password v-if="showModalChangePassword" v-model="showModalChangePassword"/>
+    <form-change-password
+      v-if="showModalChangePassword"
+      v-model="showModalChangePassword"/>
+    <form-change-image-profile
+      v-if="showModalChangeImageProfile"
+      v-model="showModalChangeImageProfile"/>
   </q-layout>
 </template>
 
@@ -59,6 +73,7 @@
 import { mapState, mapActions } from 'vuex';
 import EssentialLink from 'components/common/EssentialLink.vue';
 import FormChangePassword from 'components/user/FormChangePassword.vue';
+import FormChangeImageProfile from 'components/user/FormChangeImageProfile.vue';
 import configurationTypes from '../store/modules/configuration/types';
 
 const linksData = [
@@ -77,6 +92,12 @@ if (user) {
     roleUserSesion = 'Administrador';
     linksData.push(
       {
+        title: 'Negocios',
+        caption: 'Gestiona los negocios',
+        icon: 'domain',
+        link: '/company',
+      },
+      {
         title: 'Usuarios',
         caption: 'Crea y modifica usuarios',
         icon: 'people',
@@ -85,20 +106,14 @@ if (user) {
       {
         title: 'Categorias',
         caption: 'Gestiona las categorias',
-        icon: 'category',
+        icon: 'account_tree',
         link: '/category',
       },
       {
         title: 'Planes',
         caption: 'Gestiona los planes',
-        icon: 'plan',
+        icon: 'inbox',
         link: '/plan',
-      },
-      {
-        title: 'Negocios',
-        caption: 'Gestiona los negocios',
-        icon: 'company',
-        link: '/company',
       },
       {
         title: 'Configuración',
@@ -139,6 +154,7 @@ export default {
   components: {
     EssentialLink,
     FormChangePassword,
+    FormChangeImageProfile,
   },
   data() {
     return {
@@ -147,6 +163,7 @@ export default {
       roleSesion: roleUserSesion,
       title: 'Inicio',
       showModalChangePassword: false,
+      showModalChangeImageProfile: false,
     };
   },
   async mounted() {
@@ -169,6 +186,14 @@ export default {
       }
       return `${name.substring(0, 20)} ...`;
     },
+    srcProfile() {
+      const token = localStorage.getItem('token');
+      let id = '';
+      if (token) {
+        id = JSON.parse(token).accessToken.tokenable_id;
+      }
+      return `${process.env.URL_IMAGES}/profile/${id}.jpeg`;
+    },
   },
   methods: {
     ...mapActions(configurationTypes.PATH, {
@@ -182,6 +207,9 @@ export default {
     },
     clickChangePassword() {
       this.showModalChangePassword = true;
+    },
+    clickChangeImageProfile() {
+      this.showModalChangeImageProfile = true;
     },
     clickLogOut() {
       localStorage.removeItem('token');

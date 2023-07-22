@@ -3,7 +3,7 @@
     <q-dialog v-model="showDialog" persistent>
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Agregar nuevo logo</div>
+          <div class="text-h6">Agregar nueva imagen de perfil</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -30,10 +30,10 @@
           </div>
           <q-separator class="q-mt-md"/>
           <div class="row text-center q-mt-md">
-            <q-btn label="cancelar" type="reset" color="primary" :disable="isLoading"
-              outline class="col" v-close-popup/>
+            <q-btn label="cancelar" type="reset" color="primary" :loading="isLoading"
+              :disable="disabledBtns" outline class="col" v-close-popup/>
             <q-btn label="Aceptar" type="submit" color="primary" :loading="isLoading"
-              class="col q-ml-sm" @click="saveImage"/>
+              :disable="disabledBtns" class="col q-ml-sm" @click="saveImage"/>
           </div>
         </q-card-section>
       </q-card>
@@ -43,7 +43,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import CropperDialog from 'components/common/CropperDialog.vue';
-import companyTypes from '../../store/modules/company/types';
+import userTypes from '../../store/modules/user/types';
 
 export default {
   data() {
@@ -55,8 +55,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(companyTypes.PATH, [
-      'statusChangeLogo',
+    ...mapState(userTypes.PATH, [
+      'statusChangeImageProfile',
     ]),
     showDialog: {
       get() {
@@ -66,25 +66,32 @@ export default {
         this.$emit('input', val);
       },
     },
+    disabledBtns() {
+      return !this.imageSrc || !this.imageSrc.includes('data:image');
+    },
+    idUser() {
+      const token = localStorage.getItem('token');
+      let id = '';
+      if (token) {
+        id = JSON.parse(token).accessToken.tokenable_id;
+      }
+      return `${id}`;
+    },
   },
   props: {
     value: {
       type: Boolean,
       default: false,
     },
-    item: {
-      type: Object,
-    },
   },
   mounted() {
-    if (this.item.description && this.item.description.length > 0) {
+    /* if (this.item.description && this.item.description.length > 0) {
       this.imageSrc = this.item.description;
-    }
+    } */
   },
   methods: {
-    ...mapActions(companyTypes.PATH, {
-      fetchCompanies: companyTypes.actions.FETCH_COMPANIES,
-      changeLogoCompany: companyTypes.actions.CHANGE_LOGO,
+    ...mapActions(userTypes.PATH, {
+      changeImageProfile: userTypes.actions.CHANGE_IMAGE_PROFILE,
     }),
     handleFile(file) {
       this.imageSrc = URL.createObjectURL(file);
@@ -94,11 +101,13 @@ export default {
     },
     async saveImage() {
       this.isLoading = true;
-      await this.changeLogoCompany({
-        id: this.item.id,
+      await this.changeImageProfile({
+        id: this.idUser,
         image: this.imageSrc,
       });
-      await this.fetchCompanies();
+      // await this.fetchCompanies();
+      console.log(this.statusChangeImageProfile);
+      window.location.href = './';
       this.isLoading = false;
       this.showDialog = false;
     },
