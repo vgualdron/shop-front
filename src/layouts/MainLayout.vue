@@ -11,7 +11,7 @@
             label="Opciones">
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
-                <q-avatar size="72px">
+                <q-avatar size="72px" @click="clickChangeImageProfile" class="cursor-pointer">
                   <img :src="srcProfile">
                 </q-avatar>
                 <div class="text-subtitle1 q-mt-md q-mb-xs">{{ name }}</div>
@@ -65,7 +65,8 @@
       v-model="showModalChangePassword"/>
     <form-change-image-profile
       v-if="showModalChangeImageProfile"
-      v-model="showModalChangeImageProfile"/>
+      v-model="showModalChangeImageProfile"
+      :src="srcProfile"/>
   </q-layout>
 </template>
 
@@ -179,20 +180,18 @@ export default {
       'configurations',
     ]),
     name() {
-      const token = localStorage.getItem('token');
       let name = '';
-      if (token) {
-        name = JSON.parse(token).accessToken.name;
+      if (user) {
+        name = JSON.parse(user).name;
       }
       return `${name.substring(0, 20)} ...`;
     },
     srcProfile() {
-      const token = localStorage.getItem('token');
-      let id = '';
-      if (token) {
-        id = JSON.parse(token).accessToken.tokenable_id;
+      let photo = '';
+      if (user) {
+        photo = JSON.parse(user).photo;
       }
-      return `${process.env.URL_IMAGES}/profile/${id}.jpeg`;
+      return `${process.env.URL_IMAGES}/profile/${photo}`;
     },
   },
   methods: {

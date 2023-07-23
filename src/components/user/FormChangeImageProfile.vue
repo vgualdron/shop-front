@@ -70,10 +70,10 @@ export default {
       return !this.imageSrc || !this.imageSrc.includes('data:image');
     },
     idUser() {
-      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
       let id = '';
-      if (token) {
-        id = JSON.parse(token).accessToken.tokenable_id;
+      if (user) {
+        id = JSON.parse(user).id;
       }
       return `${id}`;
     },
@@ -83,15 +83,20 @@ export default {
       type: Boolean,
       default: false,
     },
+    src: {
+      type: String,
+      default: '',
+    },
   },
   mounted() {
-    /* if (this.item.description && this.item.description.length > 0) {
-      this.imageSrc = this.item.description;
-    } */
+    if (this.src) {
+      this.imageSrc = this.src;
+    }
   },
   methods: {
     ...mapActions(userTypes.PATH, {
       changeImageProfile: userTypes.actions.CHANGE_IMAGE_PROFILE,
+      getUser: userTypes.actions.GET_USER,
     }),
     handleFile(file) {
       this.imageSrc = URL.createObjectURL(file);
@@ -102,12 +107,10 @@ export default {
     async saveImage() {
       this.isLoading = true;
       await this.changeImageProfile({
-        id: this.idUser,
         image: this.imageSrc,
       });
-      // await this.fetchCompanies();
-      console.log(this.statusChangeImageProfile);
-      window.location.href = './';
+      await this.getUser(this.idUser);
+      window.location.reload();
       this.isLoading = false;
       this.showDialog = false;
     },

@@ -7,6 +7,7 @@ export default {
     CHANGE_PASSWORD_USER: '@actions/changePasswordUser',
     DELETE_USER: '@actions/deleteUser',
     CHANGE_IMAGE_PROFILE: '@actions/changeImageProfile',
+    GET_USER: '@actions/getUser',
   },
   getters: {
   },
@@ -15,5 +16,6 @@ export default {
     SET_STATUS_ADD_USER: '@mutations/setStatusAddUser',
     SET_STATUS_CHANGE_PASSWORD_USER: '@mutations/setStatusChangePasswordUser',
     SET_STATUS_CHANGE_IMAGE_PROFILE: '@mutations/setStatusChangeImageProfile',
+    SET_USER: '@mutations/setUser',
   },
 };

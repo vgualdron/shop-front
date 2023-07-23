@@ -50,4 +50,14 @@ export default {
       commit(types.mutations.SET_STATUS_CHANGE_IMAGE_PROFILE, error.response.data);
     }
   },
+  async [types.actions.GET_USER]({ commit }, payload) {
+    try {
+      const response = await userApi.getUser(payload);
+      commit(types.mutations.SET_USER, response.data);
+      localStorage.setItem('user', JSON.stringify(response.data.data));
+    } catch (error) {
+      console.error(error);
+      commit(types.mutations.SET_USER, error.response.data);
+    }
+  },
 };

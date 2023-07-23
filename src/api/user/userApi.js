@@ -25,8 +25,12 @@ export default {
     method: 'DELETE',
   }),
   changeImageProfile: (data) => http({
-    url: `${process.env.URL_API}/user/change-image-profile/${data.id}`,
+    url: `${process.env.URL_API}/user/change-image-profile`,
     method: 'POST',
     data,
+  }),
+  getUser: (id) => http({
+    url: `${process.env.URL_API}/user/${id}`,
+    method: 'GET',
   }),
 };

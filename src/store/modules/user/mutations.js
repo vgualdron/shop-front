@@ -13,4 +13,7 @@ export default {
   [types.mutations.SET_STATUS_CHANGE_IMAGE_PROFILE](state, payload) {
     state.statusChangeImageProfile = payload;
   },
+  [types.mutations.SET_USER](state, payload) {
+    state.user = payload;
+  },
 };

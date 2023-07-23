@@ -4,5 +4,6 @@ export default function () {
     statusAddUser: {},
     statusChangePasswordUser: {},
     statusChangeImageProfile: {},
+    user: {},
   };
 }
