@@ -14,10 +14,10 @@
             <q-file outlined clearable v-model="fileName" class="q-mb-md" label="Buscar imagen..."
               accept=".jpg, image/*" @input="handleFile" />
             <p>Click en la imagen para empezar a editar</p>
-            <div id="display-area">
+            <div id="display-area" ref="displayAreaRef">
               <div class="container cursor-pointer column items-center"
                 @mouseover="showOverlay = !showOverlay">
-                <img ref="image" :src="imageSrc" style="width: 250px;">
+                <img ref="image" :src="imageSrc" style="width: 250px;" >
                 <div class="overlay flex justify-center items-center" :hidden="showOverlay">
                   <q-icon name="crop" size="xl" color="grey-10" class="crop-icon" />
                 </div>
@@ -100,6 +100,10 @@ export default {
     }),
     handleFile(file) {
       this.imageSrc = URL.createObjectURL(file);
+      const { displayAreaRef } = this.$refs;
+      if (displayAreaRef) {
+        displayAreaRef.click();
+      }
     },
     finishCropper(croppedImage) {
       this.imageSrc = croppedImage;

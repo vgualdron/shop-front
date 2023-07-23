@@ -27,7 +27,7 @@
         <img class="preview" :src="destination">
       </div>
       <div v-else class="preview column items-center">
-        Loading cropper...
+        Cargando ...
         <q-spinner size="3em" color="primary" />
       </div>
     </div>
@@ -57,6 +57,7 @@ export default {
   methods: {
     startCropper() {
       this.cropper = new Cropper(this.$refs.image, {
+        checkCrossOrigin: true,
         viewMode: 1,
         aspectRatio: 1 / 1,
         crop: () => {
