@@ -53,6 +53,7 @@ module.exports = function (/* ctx */) {
       env: {
         URL_API: process.env.URL_API,
         URL_IMAGES: process.env.URL_IMAGES,
+        LATEST_VERSION_APP: process.env.LATEST_VERSION_APP,
       },
       // transpile: false,
 
@@ -108,6 +109,7 @@ module.exports = function (/* ctx */) {
         'Notify',
         'LocalStorage',
         'Dialog',
+        'Loading',
       ],
     },
 

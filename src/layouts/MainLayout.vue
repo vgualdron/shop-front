@@ -55,6 +55,9 @@
         <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link"
           @changeMenu="changeMenu" />
       </q-list>
+      <q-item-label header class="text-grey-8 text-center q-mt-md">
+        {{ versionApp }}
+      </q-item-label>
     </q-drawer>
 
     <q-page-container>
@@ -192,6 +195,9 @@ export default {
         photo = JSON.parse(user).photo;
       }
       return `${process.env.URL_IMAGES}/profile/${photo}`;
+    },
+    versionApp() {
+      return `Version ${process.env.LATEST_VERSION_APP}`;
     },
   },
   methods: {
