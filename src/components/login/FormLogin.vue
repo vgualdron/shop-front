@@ -11,7 +11,7 @@
         <q-item-section>
           <q-item-label>Iniciar sesión</q-item-label>
           <q-item-label caption>
-            Ingresa tus datos
+            Ingresa tus datos por favor
           </q-item-label>
         </q-item-section>
       </q-item>
