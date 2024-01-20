@@ -11,6 +11,7 @@ La api tambien está montado en ese mismo servidor.
 
 
 Para que se apliquen los cambios en la PWA se debe modificar el register-service-worker.js dentro de /src-pwa
+y modificar el quasar.conf.js
 
 ## Install the dependencies
 ```bash
