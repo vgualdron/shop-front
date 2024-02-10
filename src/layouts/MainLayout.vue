@@ -52,7 +52,10 @@
       <q-list>
         <q-item-label header class="text-grey-8">
         </q-item-label>
-        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link"
+        <EssentialLink
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
           @changeMenu="changeMenu" />
       </q-list>
       <q-item-label header class="text-grey-8 text-center q-mt-md">
