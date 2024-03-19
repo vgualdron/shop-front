@@ -99,10 +99,16 @@ if (user) {
     roleUserSesion = 'Administrador';
     linksData.push(
       {
-        title: 'Negocios',
-        caption: 'Gestiona los negocios',
-        icon: 'domain',
-        link: '/company',
+        title: 'Categorias',
+        caption: 'Gestiona las categorias',
+        icon: 'account_tree',
+        link: '/category',
+      },
+      {
+        title: 'Productos',
+        caption: 'Gestiona los productos',
+        icon: 'inbox',
+        link: '/product',
       },
       {
         title: 'Usuarios',
@@ -111,19 +117,7 @@ if (user) {
         link: '/user',
       },
       {
-        title: 'Categorias',
-        caption: 'Gestiona las categorias',
-        icon: 'account_tree',
-        link: '/category',
-      },
-      {
-        title: 'Planes',
-        caption: 'Gestiona los planes',
-        icon: 'inbox',
-        link: '/plan',
-      },
-      {
-        title: 'Configuración',
+        title: 'Parametros',
         caption: 'Parametros para la app',
         icon: 'settings',
         link: '/settings',
@@ -133,22 +127,22 @@ if (user) {
     roleUserSesion = 'Lider';
     linksData.push(
       {
+        title: 'Categorias',
+        caption: 'Gestiona las categorias',
+        icon: 'account_tree',
+        link: '/category',
+      },
+      {
+        title: 'Productos',
+        caption: 'Gestiona los productos',
+        icon: 'inbox',
+        link: '/product',
+      },
+      {
         title: 'Usuarios',
         caption: 'Crea y modifica usuarios',
         icon: 'people',
         link: '/user',
-      },
-      {
-        title: 'Category',
-        caption: 'Gestiona las categorias de los negocios',
-        icon: 'category',
-        link: '/category',
-      },
-      {
-        title: 'Negocios',
-        caption: 'Gestiona los negocios',
-        icon: 'company',
-        link: '/company',
       },
     );
   } else {

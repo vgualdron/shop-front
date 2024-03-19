@@ -2,7 +2,7 @@ import common, { name as commonName } from './common';
 import user, { name as userName } from './user';
 import configuration, { name as configurationName } from './configuration';
 import category, { name as categoryName } from './category';
-import plan, { name as planName } from './plan';
+import product, { name as productName } from './product';
 import company, { name as companyName } from './company';
 
 export default {
@@ -10,6 +10,6 @@ export default {
   [userName]: user,
   [configurationName]: configuration,
   [categoryName]: category,
-  [planName]: plan,
+  [productName]: product,
   [companyName]: company,
 };

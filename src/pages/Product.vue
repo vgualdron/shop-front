@@ -1,19 +1,19 @@
 <template>
   <q-page class="">
-    <table-plans />
+    <table-product />
   </q-page>
 </template>
 
 <script>
-import TablePlans from 'components/plan/TablePlan.vue';
+import TableProduct from 'components/product/TableProduct.vue';
 
 export default {
-  components: { TablePlans },
+  components: { TableProduct },
   data() {
     return {
     };
   },
-  name: 'PagePlan',
+  name: 'PageProduct',
   computed: {
   },
 };

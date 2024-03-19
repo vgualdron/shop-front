@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <q-table title="Planes" :data="data" :columns="columns" row-key="name"
+    <q-table title="Productos" :data="data" :columns="columns" row-key="name"
       :selected.sync="selected" :loading="isLoadingTable" :filter="filter"
       :pagination.sync="pagination">
       <template v-slot:top>
@@ -17,6 +17,20 @@
           <q-td key="actions" :props="props">
             <q-btn icon="delete" type="reset" color="primary" flat size="sm"
               class="col q-ml-sm" @click="openModal('delete', props.row)" />
+          </q-td>
+          <q-td key="categorie_id" :props="props">
+            <q-icon size="xs" name="edit" />
+            {{ optionsCategories.find((item) => props.row.categorie_id === item.value).label }}
+            <q-popup-edit
+              :value="optionsCategories.find((item) => props.row.categorie_id === item.value)"
+              v-slot="scope"
+              @input="val => save('categorie_id', val)"
+              buttons>
+              <q-select
+                outlined
+                v-model="scope.value"
+                :options="optionsCategories"/>
+            </q-popup-edit>
           </q-td>
           <q-td key="name" :props="props">
             <q-icon size="xs" name="edit" />
@@ -53,13 +67,14 @@
         </q-tr>
       </template>
     </q-table>
-    <form-plan v-if="showModal" v-model="showModal"/>
+    <form-product v-if="showModal" v-model="showModal"/>
   </div>
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import FormPlan from 'components/plan/FormPlan.vue';
-import planTypes from '../../store/modules/plan/types';
+import FormProduct from 'components/product/FormProduct.vue';
+import productTypes from '../../store/modules/product/types';
+import categoryTypes from '../../store/modules/category/types';
 
 export default {
   data() {
@@ -72,6 +87,12 @@ export default {
           name: 'actions',
           required: true,
           label: 'Acciones',
+          align: 'left',
+        },
+        {
+          name: 'categorie_id',
+          required: true,
+          label: 'Categoria',
           align: 'left',
         },
         {
@@ -103,28 +124,38 @@ export default {
   },
   async mounted() {
     this.isLoadingTable = true;
-    await this.fetchPlans();
+    await this.fetchCategories();
+    await this.fetchProducts();
     this.isLoadingTable = false;
   },
   computed: {
-    ...mapState(planTypes.PATH, [
-      'plans',
+    ...mapState(productTypes.PATH, [
+      'products',
+    ]),
+    ...mapState(categoryTypes.PATH, [
+      'categories',
     ]),
     data() {
-      return [...this.plans];
+      return [...this.products];
+    },
+    optionsCategories() {
+      return this.categories.map(({ id, name }) => ({ label: name, value: id }));
     },
   },
   methods: {
-    ...mapActions(planTypes.PATH, {
-      fetchPlans: planTypes.actions.FETCH_PLANS,
-      updatePlan: planTypes.actions.UPDATE_PLAN,
-      deletePlan: planTypes.actions.DELETE_PLAN,
+    ...mapActions(productTypes.PATH, {
+      fetchProducts: productTypes.actions.FETCH_PRODUCTS,
+      updateProduct: productTypes.actions.UPDATE_PRODUCT,
+      deleteProduct: productTypes.actions.DELETE_PRODUCT,
+    }),
+    ...mapActions(categoryTypes.PATH, {
+      fetchCategories: categoryTypes.actions.FETCH_CATEGORIES,
     }),
     async save(field, value) {
       this.isLoadingTable = true;
-      this.itemSelected[field] = value;
-      await this.updatePlan(this.itemSelected);
-      await this.fetchPlans();
+      this.itemSelected[field] = value.value || value;
+      await this.updateProduct(this.itemSelected);
+      await this.fetchProducts();
       this.isLoadingTable = false;
     },
     clickRow(row) {
@@ -137,7 +168,7 @@ export default {
       if (action === 'delete') {
         this.$q.dialog({
           title: 'Eliminar',
-          message: 'Está seguro que desea eliminar el plan?',
+          message: 'Está seguro que desea eliminar el producto?',
           ok: {
             push: true,
           },
@@ -149,8 +180,8 @@ export default {
           persistent: true,
         }).onOk(async () => {
           this.isLoadingTable = true;
-          await this.deletePlan(row.id);
-          await this.fetchPlans();
+          await this.deleteProduct(row.id);
+          await this.fetchProducts();
           this.isLoadingTable = false;
         }).onCancel(() => {
           // console.log('>>>> Cancel')
@@ -161,7 +192,7 @@ export default {
     },
   },
   components: {
-    FormPlan,
+    FormProduct,
   },
 };
 </script>

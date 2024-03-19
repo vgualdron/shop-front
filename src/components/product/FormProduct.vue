@@ -10,6 +10,9 @@
         <q-separator />
         <q-card-section style="max-height: 60vh" class="scroll">
           <q-form @submit="onSubmit" class="q-gutter-md">
+            <q-select outlined v-model="categorie_id" label="Categoria *"
+              hint="Seleccione la categoria" lazy-rules :options="optionsCategories"
+              :rules="[(val) => (!!val) || 'La categoria es requerida']" />
             <q-input outlined v-model="name" label="Nombre *" hint="Escriba el nombre"
               lazy-rules :rules="[val => val && val.length > 0 || 'Este campo es obligatorio']" />
             <q-input v-model="description" hint="Escriba la descripción" label="Descripción"
@@ -34,7 +37,8 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import planTypes from '../../store/modules/plan/types';
+import productTypes from '../../store/modules/product/types';
+import categoryTypes from '../../store/modules/category/types';
 
 export default {
   data() {
@@ -45,12 +49,19 @@ export default {
       description: '',
       price: '',
       priority: '',
+      categorie_id: '',
     };
   },
   computed: {
-    ...mapState(planTypes.PATH, [
-      'statusAddPlan',
+    ...mapState(productTypes.PATH, [
+      'statusAddProduct',
     ]),
+    ...mapState(categoryTypes.PATH, [
+      'categories',
+    ]),
+    optionsCategories() {
+      return this.categories.map(({ id, name }) => ({ label: name, value: id }));
+    },
     showDialog: {
       get() {
         return this.value;
@@ -67,33 +78,34 @@ export default {
     },
   },
   methods: {
-    ...mapActions(planTypes.PATH, {
-      fetchPlans: planTypes.actions.FETCH_PLANS,
-      addPlan: planTypes.actions.ADD_PLAN,
+    ...mapActions(productTypes.PATH, {
+      fetchProducts: productTypes.actions.FETCH_PRODUCTS,
+      addProduct: productTypes.actions.ADD_PRODUCT,
     }),
     async onSubmit() {
       this.isLoading = true;
-      await this.addPlan({
+      await this.addProduct({
         name: this.name,
         description: this.description,
         price: this.price,
         priority: this.priority,
+        categorie_id: this.categorie_id.value || this.categorie_id,
       });
-      if (this.statusAddPlan.errors) {
+      if (this.statusAddProduct.errors) {
         this.$q.notify({
           color: 'red-4',
           textColor: 'white',
-          message: this.statusAddPlan.message,
+          message: this.statusAddProduct.message,
         });
       } else {
         this.$q.notify({
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
-          message: 'Plan agregado con éxito',
+          message: 'Producto agregado con éxito',
         });
         this.showDialog = false;
-        await this.fetchPlans();
+        await this.fetchProducts();
       }
       this.isLoading = false;
     },

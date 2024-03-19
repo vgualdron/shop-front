@@ -10,7 +10,7 @@ const routes = [
     path: '/home',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '', component: () => import('pages/Product.vue') },
     ],
   },
   {
@@ -28,17 +28,10 @@ const routes = [
     ],
   },
   {
-    path: '/plan',
+    path: '/product',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Plan.vue') },
-    ],
-  },
-  {
-    path: '/company',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Company.vue') },
+      { path: '', component: () => import('pages/Product.vue') },
     ],
   },
   {
