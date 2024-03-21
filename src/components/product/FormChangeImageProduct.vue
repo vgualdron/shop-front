@@ -3,7 +3,7 @@
     <q-dialog v-model="showDialog" persistent>
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Agregar nueva imagen de perfil</div>
+          <div class="text-h6">Agregar nueva imagen</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>

@@ -3,7 +3,7 @@ import user, { name as userName } from './user';
 import configuration, { name as configurationName } from './configuration';
 import category, { name as categoryName } from './category';
 import product, { name as productName } from './product';
-import company, { name as companyName } from './company';
+import image, { name as imageName } from './image';
 
 export default {
   [commonName]: common,
@@ -11,5 +11,5 @@ export default {
   [configurationName]: configuration,
   [categoryName]: category,
   [productName]: product,
-  [companyName]: company,
+  [imageName]: image,
 };

@@ -47,6 +47,9 @@ export default {
     };
   },
   props: {
+    id: {
+      type: String,
+    },
     imageSrc: {
       type: [String, Object],
     },
@@ -68,8 +71,8 @@ export default {
           // console.log(event.detail.rotate)
           // console.log(event.detail.scaleX)
           // console.log(event.detail.scaleY)
-          this.destination = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
           this.preview = true;
+          this.destination = this.cropper.getCroppedCanvas().toDataURL('image/jpeg');
         },
       });
     },
