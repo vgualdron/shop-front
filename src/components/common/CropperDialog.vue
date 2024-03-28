@@ -68,10 +68,9 @@ export default {
   },
   methods: {
     startCropper() {
-      console.log(this.$refs);
       this.cropper = new Cropper(this.$refs[this.id], {
         checkCrossOrigin: true,
-        viewMode: 1,
+        viewMode: 0,
         aspectRatio: this.aspectRatio.left / this.aspectRatio.right,
         crop: () => {
           // console.log(event.detail.x)
