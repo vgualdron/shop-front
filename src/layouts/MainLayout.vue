@@ -51,6 +51,7 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
       <q-list>
         <q-item-label header class="text-grey-8">
+          <img src="~/assets/logo-rectangle.png" width="250" class="q-mr-auto q-ml-auto">
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -202,6 +203,7 @@ export default {
       fetchConfigurations: configurationTypes.actions.FETCH_CONFIGURATIONS,
     }),
     changeMenu(title) {
+      console.log(title);
       this.title = title;
     },
     onMainClick() {

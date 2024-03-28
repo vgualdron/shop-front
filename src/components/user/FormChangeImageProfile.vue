@@ -14,18 +14,27 @@
             <q-file outlined clearable v-model="fileName" class="q-mb-md" label="Buscar imagen..."
               accept=".jpg, image/*" @input="handleFile" />
             <p>Click en la imagen para empezar a editar</p>
-            <div id="display-area" ref="displayAreaRef">
+            <div id="display-area-profile" ref="displayAreaRefProfile">
               <div class="container cursor-pointer column items-center"
                 @mouseover="showOverlay = !showOverlay">
-                <img ref="image" :src="imageSrc" style="width: 250px;" >
+                <img ref="formProfile" :src="imageSrc" style="width: 250px;" >
                 <div class="overlay flex justify-center items-center" :hidden="showOverlay">
                   <q-icon name="crop" size="xl" color="grey-10" class="crop-icon" />
                 </div>
               </div>
             </div>
-            <q-popup-proxy ref="popup" anchor="center middle" self="center left"
-              transition-show="scale" transition-hide="scale" target="#display-area">
-              <CropperDialog @destroy="finishCropper" :imageSrc="imageSrc" />
+            <q-popup-proxy
+              ref="popup"
+              anchor="center middle"
+              self="center left"
+              transition-show="scale"
+              transition-hide="scale"
+              target="#display-area-profile">
+              <CropperDialog
+                id="formProfile"
+                @destroy="finishCropper"
+                :imageSrc="imageSrc"
+                :aspectRatio="{ left: 1, right: 1 }"/>
             </q-popup-proxy>
           </div>
           <q-separator class="q-mt-md"/>
@@ -49,7 +58,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      imageSrc: 'https://media.istockphoto.com/id/969564218/vector/no-photo-set.jpg?s=612x612&w=0&k=20&c=Th8J1GoW55Tj-dfb1CCwelwx4sj82itv3PDjLHK2FEI=',
+      imageSrc: '',
       showOverlay: false,
       fileName: null,
     };
@@ -100,9 +109,9 @@ export default {
     }),
     handleFile(file) {
       this.imageSrc = URL.createObjectURL(file);
-      const { displayAreaRef } = this.$refs;
-      if (displayAreaRef) {
-        displayAreaRef.click();
+      const { displayAreaRefProfile } = this.$refs;
+      if (displayAreaRefProfile) {
+        displayAreaRefProfile.click();
       }
     },
     finishCropper(croppedImage) {

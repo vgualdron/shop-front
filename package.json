@@ -1,8 +1,8 @@
 {
-  "name": "mi-negocio",
-  "version": "0.0.1",
-  "description": "Mi Negocio",
-  "productName": "Mi Negocio",
+  "name": "panel-tienda",
+  "version": "1.0.1",
+  "description": "Panel Tienda",
+  "productName": "Panel Tienda",
   "author": "victor.gualdron.r@gmail.com",
   "private": true,
   "scripts": {

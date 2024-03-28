@@ -44,12 +44,9 @@ export default {
     },
   },
   methods: {
-    clickOption(link) {
+    clickOption(link, title) {
       this.$router.push(link);
-      /* setTimeout(() => {
-        window.location.reload();
-        this.$emit('changeMenu', title);
-      }, 500); */
+      this.$emit('changeMenu', title);
     },
   },
 };

@@ -79,16 +79,18 @@
             </q-popup-edit>
           </q-td>
         </q-tr>
-        <q-tr v-show="props.expand" :props="props">
+        <q-tr v-if="props.expand" :props="props">
           <q-td colspan="100%" class="is-flex">
 
             <div class="q-pa-md row items-start q-gutter-md">
               <q-card
+                class="my-card bg-grey-1 q-pa-md"
+                flat
+                bordered
                 v-for="image in props.row.images"
-                :key="`btn_dropdown_${image.id}_${image.name}`"
-                flat bordered class="my-card bg-grey-1">
+                :key="`btn_dropdown_${image.id}_${image.name}`">
                 <div class="row items-center no-wrap">
-                  <div class="col q-pa-md">
+                  <div class="col">
                     <div class="text-h6">{{ image.name }}</div>
                     <div class="text-subtitle2">
                       Orden:
@@ -96,15 +98,15 @@
                         {{ image.order }}
                       </q-badge>
                     </div>
-                    <img ref="image" class="image_product" :src="srcImage(image.name)">
+                    <img class="image_product" :src="srcImage(image.name)">
                   </div>
                 </div>
                 <q-separator />
                 <q-card-actions align="right">
-                  <q-btn flat>
+                  <q-btn flat @click="openModalDeleteImage(image)">
                     Borrar imagen
                   </q-btn>
-                  <q-btn flat @click="itemSelected=image">
+                  <q-btn flat @click="itemSelectedImage=image">
                     Editar orden
                     <q-popup-edit
                         :value="image.order"
@@ -118,24 +120,44 @@
               </q-card>
 
               <q-card
-                flat bordered class="my-card bg-grey-1">
+                class="my-card bg-grey-1 q-pa-md"
+                flat
+                bordered>
                 <div class="flex column justify-center text-center text-body1">
                   <p>Cargar imagen</p>
-                  <q-file outlined clearable v-model="fileName" class="q-mb-md"
-                    label="Buscar imagen..." accept=".jpg, image/*" @input="handleFile" />
-                  <p>Click en la imagen para empezar a editar</p>
-                  <div id="display-area" ref="displayAreaRef">
+                  <q-file
+                    outlined
+                    clearable
+                    v-model="fileName"
+                    class="q-mb-md"
+                    label="Buscar imagen..."
+                    accept=".jpg, image/*"
+                    @input="handleFile(fileName, `displayAreaRef_${props.row.id}`)" />
+                  <p v-if="imageSrc">Click en la imagen para empezar a editar</p>
+                  <div :id="`display-area_${props.row.id}`" :ref="`displayAreaRef_${props.row.id}`">
                     <div class="container cursor-pointer column items-center"
                       @mouseover="showOverlay = !showOverlay">
-                      <img ref="image" :src="imageSrc" style="width: 250px;" >
+                      <img
+                        :ref="`imageProduct_${props.row.id}`"
+                        :src="imageSrc"
+                        style="width: 250px;">
                       <div class="overlay flex justify-center items-center" :hidden="showOverlay">
                         <q-icon name="crop" size="xl" color="grey-10" class="crop-icon" />
                       </div>
                     </div>
                   </div>
-                  <q-popup-proxy ref="popup" anchor="center middle" self="center left"
-                    transition-show="scale" transition-hide="scale" target="#display-area">
-                    <CropperDialog @destroy="finishCropper" :imageSrc="imageSrc" />
+                  <q-popup-proxy
+                    ref="popup"
+                    anchor="center middle"
+                    self="center left"
+                    transition-show="scale"
+                    transition-hide="scale"
+                    :target="`#display-area_${props.row.id}`">
+                    <CropperDialog
+                      :id="`imageProduct_${props.row.id}`"
+                      :imageSrc="imageSrc"
+                      :aspectRatio="{ left: 1, right: 1 }"
+                      @destroy="finishCropper"/>
                   </q-popup-proxy>
                 </div>
                 <q-separator class="q-mt-md"/>
@@ -143,7 +165,7 @@
                   <q-btn label="cancelar" type="reset" color="primary" :loading="isLoading"
                     :disable="disabledBtns" outline class="col" v-close-popup/>
                   <q-btn label="Aceptar" type="submit" color="primary" :loading="isLoading"
-                    :disable="disabledBtns" class="col q-ml-sm" @click="saveImage"/>
+                    :disable="disabledBtns" class="col q-ml-sm" @click="insertImage"/>
                 </div>
                 <q-separator />
               </q-card>
@@ -174,6 +196,7 @@ export default {
       isLoadingTable: false,
       selected: [],
       itemSelected: {},
+      itemSelectedImage: {},
       columns: [
         {
           name: 'actions',
@@ -221,7 +244,7 @@ export default {
       showModalChangeImageProduct: false,
       fileName: null,
       showOverlay: false,
-      imageSrc: 'https://media.istockphoto.com/id/969564218/vector/no-photo-set.jpg?s=612x612&w=0&k=20&c=Th8J1GoW55Tj-dfb1CCwelwx4sj82itv3PDjLHK2FEI=',
+      imageSrc: '',
     };
   },
   async mounted() {
@@ -261,6 +284,8 @@ export default {
     }),
     ...mapActions(imageTypes.PATH, {
       addImage: imageTypes.actions.ADD_IMAGE,
+      updateImage: imageTypes.actions.UPDATE_IMAGE,
+      deleteImage: imageTypes.actions.DELETE_IMAGE,
     }),
     srcImage(name) {
       return `${process.env.URL_IMAGES}/products/${name}`;
@@ -304,9 +329,9 @@ export default {
         });
       }
     },
-    handleFile(file) {
+    handleFile(file, ref) {
       this.imageSrc = URL.createObjectURL(file);
-      const { displayAreaRef } = this.$refs;
+      const displayAreaRef = this.$refs[ref];
       if (displayAreaRef) {
         displayAreaRef.click();
       }
@@ -314,16 +339,50 @@ export default {
     finishCropper(croppedImage) {
       this.imageSrc = croppedImage;
     },
-    async saveImage() {
+    async insertImage() {
       this.isLoading = true;
       await this.addImage({
         image: this.imageSrc,
-        order: 0,
+        order: 1,
         product_id: this.itemSelected.id,
       });
       await this.fetchProducts();
       this.isLoading = false;
       this.showDialog = false;
+      this.imageSrc = '';
+      this.fileName = null;
+    },
+    async saveImage(field, value) {
+      this.isLoadingTable = true;
+      const row = { ...this.itemSelectedImage };
+      row[field] = value;
+      await this.updateImage(row);
+      await this.fetchProducts();
+      this.isLoadingTable = false;
+    },
+    openModalDeleteImage(row) {
+      this.$q.dialog({
+        title: 'Eliminar',
+        message: 'Está seguro que desea eliminar la imagen?',
+        ok: {
+          push: true,
+        },
+        cancel: {
+          push: true,
+          color: 'negative',
+          text: 'adsa',
+        },
+        persistent: true,
+      }).onOk(async () => {
+        this.isLoadingTable = true;
+        await this.deleteImage(row.id);
+        await this.fetchProducts();
+        this.isLoadingTable = false;
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      });
     },
   },
   components: {

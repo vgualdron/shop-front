@@ -37,7 +37,18 @@
             </q-popup-edit>
           </q-td>
           <q-td key="role" :props="props">
-            {{ props.row.role }}
+            <q-icon size="xs" name="edit" />
+            {{ optionsRoles.find((item) => props.row.role === item.value).label }}
+            <q-popup-edit
+              :value="optionsRoles.find((item) => props.row.role === item.value)"
+              v-slot="scope"
+              @input="val => save('role', val)"
+              buttons>
+              <q-select
+                outlined
+                v-model="scope.value"
+                :options="optionsRoles"/>
+            </q-popup-edit>
           </q-td>
           <q-td key="address" :props="props">
             <q-icon size="xs" name="edit" />
@@ -72,6 +83,24 @@ export default {
       isLoadingTable: false,
       selected: [],
       itemSelected: {},
+      optionsRoles: [
+        {
+          label: 'Administrador',
+          value: 'admin',
+        },
+        {
+          label: 'Lider',
+          value: 'lider',
+        },
+        {
+          label: 'Ayudante',
+          value: 'assistant',
+        },
+        {
+          label: 'Cliente',
+          value: 'client',
+        },
+      ],
       columns: [
         {
           name: 'actions',
@@ -130,7 +159,7 @@ export default {
     }),
     async save(field, value) {
       this.isLoadingTable = true;
-      this.itemSelected[field] = value;
+      this.itemSelected[field] = value.value || value;
       await this.updateUser(this.itemSelected);
       await this.fetchUsers();
       this.isLoadingTable = false;

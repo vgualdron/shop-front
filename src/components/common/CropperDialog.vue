@@ -20,7 +20,7 @@
         </q-btn>
       </div>
       <div class="container">
-        <img ref="image" :src="imageSrc">
+        <img :ref="id" :src="imageSrc" :id="id" alt="Image">
       </div>
       <p class="q-mt-md text-weight-bold">Preview:</p>
       <div v-if="preview" class="preview-container column items-center">
@@ -53,16 +53,26 @@ export default {
     imageSrc: {
       type: [String, Object],
     },
+    aspectRatio: {
+      type: Object,
+      default() {
+        return {
+          left: 1,
+          right: 1,
+        };
+      },
+    },
   },
   mounted() {
     this.startCropper();
   },
   methods: {
     startCropper() {
-      this.cropper = new Cropper(this.$refs.image, {
+      console.log(this.$refs);
+      this.cropper = new Cropper(this.$refs[this.id], {
         checkCrossOrigin: true,
         viewMode: 1,
-        aspectRatio: 1 / 1,
+        aspectRatio: this.aspectRatio.left / this.aspectRatio.right,
         crop: () => {
           // console.log(event.detail.x)
           // console.log(event.detail.y)
