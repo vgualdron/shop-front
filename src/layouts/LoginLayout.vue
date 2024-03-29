@@ -3,9 +3,9 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          Iniciar Sesión
+          Yambú Muebles
         </q-toolbar-title>
-        <div>Mi Negocio</div>
+        <div>Panel de administración</div>
       </q-toolbar>
     </q-header>
     <q-page-container>

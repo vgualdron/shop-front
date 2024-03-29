@@ -226,7 +226,7 @@ export default {
           align: 'left',
         },
         {
-          name: 'description', align: 'center', label: 'Descripción', field: 'description', sortable: true,
+          name: 'description', align: 'left', label: 'Descripción', field: 'description', sortable: true,
         },
         {
           name: 'price', align: 'center', label: 'Precio', field: 'price', sortable: true,
@@ -393,7 +393,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
   .image_product
-    max-width 8vw
+    max-width 230px
     display flex
   .container
     position relative

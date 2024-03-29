@@ -129,9 +129,9 @@ module.exports = function (/* ctx */) {
         skipWaiting: true,
       }, // only for GenerateSW
       manifest: {
-        name: 'Mi Negocio',
-        short_name: 'Mi Negocio',
-        description: 'Mi Negocio',
+        name: 'Panel tienda',
+        short_name: 'Panel tienda',
+        description: 'Panel de la tienda virtual',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

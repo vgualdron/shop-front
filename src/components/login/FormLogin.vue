@@ -3,14 +3,13 @@
     <q-card class="my-card" flat bordered>
       <q-item>
         <q-item-section avatar>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-          </q-avatar>
+          <img src="~/assets/logo-rectangle.png" width="335">
         </q-item-section>
-
+      </q-item>
+      <q-item>
         <q-item-section>
-          <q-item-label>Iniciar sesión</q-item-label>
-          <q-item-label caption>
+          <q-item-label class="text-center">Iniciar sesión</q-item-label>
+          <q-item-label class="text-center" caption>
             Ingresa tus datos
           </q-item-label>
         </q-item-section>
