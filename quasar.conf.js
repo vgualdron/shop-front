@@ -129,13 +129,13 @@ module.exports = function (/* ctx */) {
         skipWaiting: true,
       }, // only for GenerateSW
       manifest: {
-        name: 'Panel tienda',
-        short_name: 'Panel tienda',
-        description: 'Panel de la tienda virtual',
+        name: 'Yambú Muebles',
+        short_name: 'Yambú Muebls',
+        description: 'Tienda virtual de muebles Yambú',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
-        theme_color: '#027be3',
+        theme_color: '#000000',
         icons: [
           {
             src: 'icons/icon-128x128.png',
