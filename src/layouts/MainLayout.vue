@@ -53,8 +53,8 @@
       <router-view />
     </q-page-container>
 
-    <q-footer bordered class="">
-      Footer
+    <q-footer bordered class="text-center">
+      {{ versionApp }}
     </q-footer>
     <form-change-password
       v-if="showModalChangePassword"
@@ -63,6 +63,7 @@
       v-if="showModalChangeImageProfile"
       v-model="showModalChangeImageProfile"
       :src="srcProfile" />
+      <btn-whatsapp/>
   </q-layout>
 </template>
 
@@ -70,6 +71,7 @@
 import { mapState, mapActions } from 'vuex';
 import FormChangePassword from 'components/user/FormChangePassword.vue';
 import FormChangeImageProfile from 'components/user/FormChangeImageProfile.vue';
+import BtnWhatsapp from 'components/common/BtnWhatsapp.vue';
 import configurationTypes from '../store/modules/configuration/types';
 
 const linksData = [
@@ -144,6 +146,7 @@ export default {
   components: {
     FormChangePassword,
     FormChangeImageProfile,
+    BtnWhatsapp,
   },
   data() {
     return {

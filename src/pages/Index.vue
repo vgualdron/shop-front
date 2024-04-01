@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-    <carousel-banner></carousel-banner>
-    <table-product></table-product>
+    <carousel-banner/>
+    <table-product/>
   </q-page>
 </template>
 
