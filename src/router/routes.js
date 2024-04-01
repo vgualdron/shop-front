@@ -1,9 +1,9 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/LoginLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Login.vue') },
+      { path: '', component: () => import('pages/Index.vue') },
     ],
   },
   {
@@ -11,34 +11,6 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-    ],
-  },
-  {
-    path: '/user',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/User.vue') },
-    ],
-  },
-  {
-    path: '/category',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Category.vue') },
-    ],
-  },
-  {
-    path: '/product',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Product.vue') },
-    ],
-  },
-  {
-    path: '/settings',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Configuration.vue') },
     ],
   },
 

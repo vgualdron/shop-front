@@ -2,12 +2,17 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen" />
-          <q-toolbar-title>
-            {{ title }}
-          </q-toolbar-title>
-          <q-btn-dropdown color="primary" class="no-shadow" push no-caps @click="onMainClick"
+          <img
+            src="~/assets/logo-rectangle.png"
+            width="250"
+            class="">
+          <q-btn flat round dense icon="search" class="q-ml-auto"/>
+          <q-btn flat round dense icon="store" />
+          <!--<q-btn-dropdown
+            color="primary"
+            class="no-shadow"
+            push no-caps
+            @click="onMainClick"
             label="Opciones">
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
@@ -17,22 +22,19 @@
                 <div class="text-subtitle1 q-mt-md q-mb-xs">{{ name }}</div>
                 <div class="text-subtitle1 q-mb-xs">{{ roleSesion }}</div>
                 <q-btn
+                  push
                   color="primary"
                   label="Cambiar imagen de perfil"
-                  push
                   size="sm"
                   v-close-popup
-                  @click="clickChangeImageProfile"
-                />
+                  @click="clickChangeImageProfile" />
                 <q-btn
                   color="primary"
                   label="Cambiar contraseña"
-                  push
-                  size="sm"
+                  push size="sm"
                   class="q-mt-sm"
                   v-close-popup
-                  @click="clickChangePassword"
-                />
+                  @click="clickChangePassword" />
                 <q-btn
                   color="primary"
                   label="Cerrar sesión"
@@ -40,46 +42,32 @@
                   size="sm"
                   class="q-mt-sm"
                   v-close-popup
-                  @click="clickLogOut"
-                />
+                  @click="clickLogOut" />
               </div>
             </div>
-        </q-btn-dropdown>
+          </q-btn-dropdown> -->
       </q-toolbar>
     </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
-      <q-list>
-        <q-item-label header class="text-grey-8">
-          <img src="~/assets/logo-rectangle.png" width="250" class="q-mr-auto q-ml-auto">
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-          @changeMenu="changeMenu" />
-      </q-list>
-      <q-item-label header class="text-grey-8 text-center q-mt-md">
-        {{ versionApp }}
-      </q-item-label>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer bordered class="">
+      Footer
+    </q-footer>
     <form-change-password
       v-if="showModalChangePassword"
-      v-model="showModalChangePassword"/>
+      v-model="showModalChangePassword" />
     <form-change-image-profile
       v-if="showModalChangeImageProfile"
       v-model="showModalChangeImageProfile"
-      :src="srcProfile"/>
+      :src="srcProfile" />
   </q-layout>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import EssentialLink from 'components/common/EssentialLink.vue';
 import FormChangePassword from 'components/user/FormChangePassword.vue';
 import FormChangeImageProfile from 'components/user/FormChangeImageProfile.vue';
 import configurationTypes from '../store/modules/configuration/types';
@@ -154,7 +142,6 @@ if (user) {
 export default {
   name: 'MainLayout',
   components: {
-    EssentialLink,
     FormChangePassword,
     FormChangeImageProfile,
   },

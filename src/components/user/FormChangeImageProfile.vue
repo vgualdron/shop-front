@@ -3,11 +3,9 @@
     <q-dialog v-model="showDialog" persistent>
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Agregar nueva imagen de perfil</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
-        <q-separator />
         <q-card-section style="max-height: 60vh" class="scroll">
           <div class="flex column justify-center text-center text-body1">
             <p>Cargar imagen</p>
