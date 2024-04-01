@@ -1,8 +1,8 @@
 {
-  "name": "panel-tienda",
+  "name": "yambu-shop",
   "version": "1.0.1",
-  "description": "Panel Tienda",
-  "productName": "Panel Tienda",
+  "description": "Yambu Muebles",
+  "productName": "Yambu Muebles",
   "author": "victor.gualdron.r@gmail.com",
   "private": true,
   "scripts": {
