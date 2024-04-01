@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     link() {
-      return `https://wa.me/${process.env.NUMBER_WHATSAPP}?text=Me%20quiero%20comprar%20el%20articulo`;
+      return `https://wa.me/${process.env.NUMBER_WHATSAPP}?text=Buen%20dia%20,quiero%20tener%20mas%20informacion`;
     },
   },
   methods: {

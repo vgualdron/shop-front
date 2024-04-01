@@ -1,6 +1,10 @@
 import { http } from '../../helpers/http';
 
 export default {
+  searchProducts: () => http({
+    url: `${process.env.URL_API}/product/search/params`,
+    method: 'GET',
+  }),
   fetchProducts: () => http({
     url: `${process.env.URL_API}/product`,
     method: 'GET',

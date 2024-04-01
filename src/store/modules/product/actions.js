@@ -4,7 +4,7 @@ import productApi from '../../../api/product/productApi';
 export default {
   async [types.actions.FETCH_PRODUCTS]({ commit }, payload) {
     try {
-      const response = await productApi.fetchProducts(payload);
+      const response = await productApi.searchProducts(payload);
       commit(types.mutations.SET_PRODUCTS, response.data.data);
     } catch (error) {
       console.error(error);
