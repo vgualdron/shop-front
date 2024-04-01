@@ -13,13 +13,14 @@ export default {
   name: 'BtnWhatsapp',
   data() {
     return {
+      message: 'Buen%20día%20,%20quiero%20tener%20más%20información%20sobre%20los%20productos%20vistos%20en%20la%20página%20web',
     };
   },
   props: {
   },
   computed: {
     link() {
-      return `https://wa.me/${process.env.NUMBER_WHATSAPP}?text=Buen%20dia%20,quiero%20tener%20mas%20informacion`;
+      return `https://wa.me/${process.env.NUMBER_WHATSAPP}?text=${this.message}`;
     },
   },
   methods: {
