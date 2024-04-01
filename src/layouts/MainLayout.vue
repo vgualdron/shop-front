@@ -213,3 +213,10 @@ export default {
   },
 };
 </script>
+<style>
+  .q-table__top.relative-position.row.items-center {
+    border-top: solid 2px gray;
+    border-bottom: solid 2px gray;
+    border-radius: 0px;
+  }
+</style>

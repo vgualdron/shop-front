@@ -6,15 +6,38 @@
       :columns="columns"
       row-key="name"
       :loading="isLoadingTable"
-      :filter="filter"
       :pagination.sync="pagination"
+      ref="tableGrid"
       grid>
+      <template v-slot:top>
+        <div class="row full-width q-pb-sm">
+          <q-select
+            v-model="categorieSelected"
+            label="Categoria"
+            placeholder="Seleccione la categoria"
+            :options="optionsCategories"
+            class="col-xs-12 col-sm-12 col-md-3"
+            lazy-rules>
+            <template v-slot:append>
+              <q-icon name="close" @click.stop="categorieSelected = null" class="cursor-pointer" />
+            </template>
+          </q-select>
+          <q-space/>
+          <q-input
+            debounce="300"
+            color="primary"
+            v-model="filter"
+            class="col-xs-12 col-sm-12 col-md-4">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+          <p class="col-xs-12 col-sm-12 col-md-4 text-subtitle1 text-right">
+            {{ title }}
+          </p>
+        </div>
+      </template>
       <template v-slot:top-right>
-        <q-input dense debounce="300" color="primary" v-model="filter">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
       </template>
       <template v-slot:item="props">
         <div
@@ -48,6 +71,7 @@ export default {
       isLoading: false,
       isLoadingTable: false,
       itemSelected: {},
+      categorieSelected: null,
       columns: [
         {
           name: 'images',
@@ -89,7 +113,13 @@ export default {
       'categories',
     ]),
     data() {
-      return [...this.products];
+      const text = this.filter.toLowerCase();
+      let items = this.products.filter(({ name }) => name.toLowerCase().includes(text));
+      if (this.categorieSelected && this.categorieSelected.value) {
+        const val = this.categorieSelected.value;
+        items = items.filter(({ categorie }) => parseInt(categorie.id, 10) === parseInt(val, 10));
+      }
+      return items;
     },
     optionsCategories() {
       return this.categories.map(({ id, name }) => ({ label: name, value: id }));
