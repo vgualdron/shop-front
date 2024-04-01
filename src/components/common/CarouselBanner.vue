@@ -23,7 +23,7 @@
           <q-img class="rounded-borders col-6 full-height" :src="file.url" />
           <q-img native-context-menu not-draggable class="rounded-borders col-6 full-height"
             :src="file.url2">
-            <div>{{ file.description }}</div>
+            <!--<div>{{ file.description }}</div>-->
           </q-img>
         </div>
       </q-carousel-slide>
@@ -42,6 +42,12 @@ export default {
           description: 'With native context menu and not draggable - can be swiped',
           url: `${process.env.URL_IMAGES}/banner/1-1.jpeg`,
           url2: `${process.env.URL_IMAGES}/banner/1-2.jpeg`,
+        },
+        {
+          id: 2,
+          description: 'With native context menu and not draggable - can be swiped',
+          url: `${process.env.URL_IMAGES}/banner/2-1.jpg`,
+          url2: `${process.env.URL_IMAGES}/banner/2-2.jpg`,
         },
         {
           id: 3,
