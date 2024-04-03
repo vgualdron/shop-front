@@ -56,10 +56,12 @@
         </div>
       </template>
     </q-table>
+    <modal-product v-if="showModal" v-model="showModal" :item="itemSelected" />
   </div>
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
+import ModalProduct from 'components/home/ModalProduct.vue';
 import productTypes from '../../store/modules/product/types';
 import categoryTypes from '../../store/modules/category/types';
 import { formatCurrency } from '../../helpers/format';
@@ -153,6 +155,7 @@ export default {
     clickRow(row) {
       console.log(row);
       this.itemSelected = { ...row };
+      this.showModal = true;
     },
     openModal(action, row) {
       if (action === 'delete') {
@@ -182,6 +185,7 @@ export default {
     },
   },
   components: {
+    ModalProduct,
   },
 };
 </script>
