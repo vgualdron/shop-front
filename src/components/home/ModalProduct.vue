@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-dialog v-if="showDialog" v-model="showDialog" :full-height="$q.screen.xs || $q.screen.sm">
       <q-card style="width: 700px; max-width: 80vw; max-height: 80vw;">
-        <q-card-section style="height: 70vh" class="scroll">
+        <q-card-section style="height: 90vh" class="scroll">
           <div :class="$q.screen.md || $q.screen.lg || $q.screen.xl
             ? 'f-h-phone-size row q-pa-md full-height'
             : 'f-h-phone-size q-pa-md full-height'">
