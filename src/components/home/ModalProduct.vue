@@ -3,14 +3,16 @@
     <q-dialog v-if="showDialog" v-model="showDialog">
       <q-card style="width: 700px; max-width: 80vw; max-height: 80vw;">
         <q-card-section style="height: 70vh" class="scroll">
-          <div class="row q-pa-md full-height">
+          <div :class="this.$q.screen.md || this.$q.screen.lg || this.$q.screen.xl
+            ? 'f-h-phone-size row q-pa-md full-height'
+            : 'f-h-phone-size q-pa-md full-height'">
             <q-carousel
               swipeable
               animated
               v-model="slide"
               thumbnails
               infinite
-              class="col-xs-12 col-sm-12 col-md-7"
+              class="col-xs-12 col-sm-12 col-md-7 q-mb-md"
             >
               <q-carousel-slide
                 v-for="image in item.images"
@@ -119,3 +121,11 @@ export default {
   },
 };
 </script>
+<style>
+  @media (max-width: 600) {
+    .f-h-phone-size {
+      height: 100% !important;
+      width: 100% !important;
+    }
+  }
+</style>
