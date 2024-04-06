@@ -54,6 +54,7 @@ module.exports = function (/* ctx */) {
         URL_IMAGES: process.env.URL_IMAGES,
         LATEST_VERSION_APP: process.env.LATEST_VERSION_APP,
         NUMBER_WHATSAPP: process.env.NUMBER_WHATSAPP,
+        ADDRESS_COMPANY: process.env.ADDRESS_COMPANY,
       },
       // transpile: false,
 

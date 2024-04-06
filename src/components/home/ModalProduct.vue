@@ -1,19 +1,16 @@
 <template>
   <div class="q-pa-md">
     <q-dialog v-if="showDialog" v-model="showDialog">
-      <q-card style="width: 700px; max-width: 80vw;">
-        <q-card-section class="row items-center q-pb-none">
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator />
-        <q-card-section style="max-height: 60vh" class="scroll">
-          <div class="q-pa-md">
+      <q-card style="width: 700px; max-width: 80vw; max-height: 80vw;">
+        <q-card-section style="height: 70vh" class="scroll">
+          <div class="row q-pa-md full-height">
             <q-carousel
               swipeable
               animated
               v-model="slide"
               thumbnails
               infinite
+              class="col-xs-12 col-sm-12 col-md-7"
             >
               <q-carousel-slide
                 v-for="image in item.images"
@@ -21,6 +18,36 @@
                 :key="image.name"
                 :img-src="srcImage(image.name)" />
             </q-carousel>
+            <div class="col-xs-12 col-sm-12 col-md-5 q-px-md">
+              <div class="text-h5 text-bold">{{ item.name }}</div>
+              <q-rating size="18px" v-model="stars" :max="5" color="primary" />
+              <span class="text-body2 text-bod q-ml-sm">{{ currency(item.price) }}</span>
+              <div class="text-body1 q-mt-md">{{ item.description }}</div>
+              <div class="text-body1 q-mt-lg">
+                Los gastos de envío se calculan en la pantalla de pagos.
+              </div>
+              <div class="text-body1 q-mt-lg">
+                <q-input
+                  color="primary"
+                  class="q-mt-sm col-xs-12 col-sm-12 col-md-4"
+                  type="number"
+                  label="Cantidad"
+                  v-model="count"
+                  outline>
+                </q-input>
+              </div>
+              <div class="text-body1 q-mt-lg">
+                <q-btn color="primary" label="Agregar al carrito" class="full-width" />
+              </div>
+              <div class="text-body1 q-mt-lg">
+                <q-btn color="white" text-color="black" label="Comprar ahora" class="full-width" />
+              </div>
+              <div class="text-body1 q-mt-lg">
+                Retiro disponible en
+                <b>{{ address() }}.</b><br>
+                Normalmente está listo en 5 días o más.
+              </div>
+            </div>
           </div>
         </q-card-section>
       </q-card>
@@ -29,12 +56,15 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
+import { formatCurrency } from '../../helpers/format';
 import productTypes from '../../store/modules/product/types';
 import categoryTypes from '../../store/modules/category/types';
 
 export default {
   data() {
     return {
+      stars: 5,
+      count: 1,
       isLoading: false,
       showModal: false,
       slide: 1,
@@ -79,6 +109,12 @@ export default {
     }),
     srcImage(name) {
       return `${process.env.URL_IMAGES}/products/${name}`;
+    },
+    currency(value) {
+      return `${formatCurrency(value)}`;
+    },
+    address() {
+      return `${process.env.ADDRESS_COMPANY}`;
     },
   },
 };

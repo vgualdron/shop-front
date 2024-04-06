@@ -16,10 +16,17 @@
             label="Categoria"
             placeholder="Seleccione la categoria"
             :options="optionsCategories"
-            class="col-xs-12 col-sm-12 col-md-3"
-            lazy-rules>
+            class="q-mt-sm col-xs-12 col-sm-12 col-md-3"
+            lazy-rules
+            filled
+            standout>
             <template v-slot:append>
-              <q-icon name="close" @click.stop="categorieSelected = null" class="cursor-pointer" />
+              <q-icon
+                name="close"
+                @click.stop="categorieSelected = null"
+                class="cursor-pointer"
+                round dense fla
+              />
             </template>
           </q-select>
           <q-space/>
@@ -27,12 +34,14 @@
             debounce="300"
             color="primary"
             v-model="filter"
-            class="col-xs-12 col-sm-12 col-md-4">
+            class="q-mt-sm col-xs-12 col-sm-12 col-md-4"
+            filled
+            standout>
             <template v-slot:append>
               <q-icon name="search" />
             </template>
           </q-input>
-          <p class="col-xs-12 col-sm-12 col-md-4 text-subtitle1 text-right">
+          <p class="q-mt-sm col-xs-12 col-sm-12 col-md-4 text-subtitle1 text-right">
             {{ title }}
           </p>
         </div>
@@ -41,7 +50,7 @@
       </template>
       <template v-slot:item="props">
         <div
-          class="q-pa-md col-xs-12 col-sm-6 col-md-4 cursor-pointer"
+          class="q-pa-md col-xs-12 col-sm-6 col-md-3 cursor-pointer"
           @click="clickRow(props.row)">
           <q-card class="my-card">
             <q-card-section>
@@ -92,7 +101,7 @@ export default {
         },
       ],
       pagination: {
-        rowsPerPage: 10,
+        rowsPerPage: 12,
       },
       filter: '',
       showModal: false,
